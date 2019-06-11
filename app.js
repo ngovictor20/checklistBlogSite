@@ -48,7 +48,7 @@ app.use(authRoute);
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-mongoose.connect("mongodb://127.0.0.1:27017/myapp", { useNewUrlParser: true }, function () {
+mongoose.connect("mongodb+srv://victoradmin:Harpie25@checklistapp-afjm1.mongodb.net/checklistApp?retryWrites=true&w=majority", { useNewUrlParser: true }, function () {
   console.log(mongoose.connection.readyState);
   //seedDB();
   User.find({}, function (err, users) {
