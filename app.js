@@ -15,13 +15,12 @@ var authRoute = require("./routes/auth")
 var seedDB = require("./seed");
 var session = require('express-session')
 const passportLocalMongoose = require('passport-local-mongoose');
-const hostname = '127.0.0.1';
+//const hostname = '127.0.0.1';
+const hostname = '0.0.0.0';
 const port = process.env.PORT || 5000;
 
 
 passport.use(new LocalStrategy(User.authenticate()));
-
-
 var app = express();
 app.set('views', './views')
 app.set("view engine", "ejs");
