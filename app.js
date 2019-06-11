@@ -16,7 +16,7 @@ var seedDB = require("./seed");
 var session = require('express-session')
 const passportLocalMongoose = require('passport-local-mongoose');
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = process.env.PORT || 5000;
 
 
 passport.use(new LocalStrategy(User.authenticate()));
