@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MyApp</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <base href="/"> 
+        <link rel="stylesheet" type="text/css" href="../semantic/semantic.min.css">
+        <script src="../semantic/semantic.min.js"></script>
+        <link rel = "stylesheet" type = "text/css" href = "../style/style.css" />
+    </head>
+    <body>
+        <div class="ui top huge menu attached inverted">
+            <div class="header item">
+                <i class="list ol icon"></i>
+                MyApp
+            </div>
+            <a href="/" class="item">Home</a>
+            <a href="/checklist" class="item">My Checklists</a>
+            <div  class="right menu">
+                <% if(!user){ %>
+                    <a href="/register" class="item">Register</a>
+                    <a href="/login" class="item">Login</a>
+                <% }else{ %>
+                    <div class="item">Welcome, <%=user.username%>!</div>
+                    <a href="/logout" class="item">Logout</a>
+                <% } %>
+            </div>
+        </div>
+        <br>

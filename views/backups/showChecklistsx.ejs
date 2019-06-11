@@ -1,0 +1,45 @@
+<% include partials/header %>
+
+<div class="ui main container">
+    <div class="ui header">
+        <h1>
+            Your Checklists
+        </h1>
+        <div class="ui button">
+            <a href="/checklist/new">
+                Add
+                <i class="plus circle icon"></i>
+            </a>
+        </div>
+    </div>
+    <div class="ui very relaxed item">
+        <% checklists.forEach(function(checklist){ %>
+        <div class="item">
+            <div class="ui clearing segment">
+                <span class="ui header">
+                    <a href="/checklist/<%=checklist._id%>">
+                        <%= checklist.title %>
+                        
+                    </a>
+                    <% var total = 0, done = 0  %>
+                    <% checklist.checklistItem.forEach(function(item){ %>
+                        <% if(item.complete){ %>
+                            <% done++ %>
+                        <% } total++ %>
+                    <% }) %>
+                    <div class="ui right floated"><%= done %>/<%= total %></div>
+                </span>
+
+
+                <div class="ui button yellow right floated"><a href="/checklist/<%=checklist._id%>/edit">Edit</a></div>
+                <form action="/checklist/<%=checklist._id%>?_method=DELETE" method="POST">
+                    <button class="ui button red right floated">Delete</button>
+                </form>
+
+            </div>
+        </div>
+        <% }) %>
+    </div>
+</div>
+
+<% include partials/footer %>

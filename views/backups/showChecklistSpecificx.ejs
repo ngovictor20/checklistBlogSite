@@ -1,0 +1,36 @@
+<% include partials/header %>
+<div class="ui main container">
+        <div class="ui item">
+                <div class="ui piled segment text">
+                        <div class="ui huge header"><%= checklist.title %></div>
+                        <div class="ui input fluid icon">
+                                <input type="text" name="" id="newItemForm">
+                                <i class="icon plus"></i>
+                        </div>
+                        <div class="ui segments" id="parent">
+                                <% checklist.checklistItem.forEach(function(item){ %>
+                                <div class="ui segment">
+                                        <div class="item">
+                                                <div class="middle aligned content">
+                                                        <div class="description fluid">
+                                                                <% if(!item.complete){ %>
+                                                                <p class="checklistItem" data-id="<%=item._id%>"><%= item.action %>
+                                                                </p>
+                                                                <% }else if(item.complete){ %>
+                                                                <p class="checklistItem completed" data-id="<%=item._id%>">
+                                                                        <%= item.action %>
+                                                                </p>
+                                                                <% } %>
+                                                        </div>
+                                                        <div class="extra" >
+                                                                <i class="x icon right floated delete" data-id="<%=item._id%>"></i>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                                <% }) %>
+                        </div>
+                </div>
+        </div>
+</div>
+<% include partials/footer %>
