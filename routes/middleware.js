@@ -1,6 +1,7 @@
 var User = require("../models/user")
 var Checklist = require("../models/checklist")
 var ChecklistItem = require("../models/checklistItem")
+var Blog = require("../models/blog")
 middle = {}
 
 // String.prototype.equals = function(that) {
@@ -48,6 +49,30 @@ middle.checkChecklistOwnership = function(req,res,next){
                 }
             }
         });
+    }
+
+}
+
+
+middle.checkBlogOwnership = function(req,res,next){
+    if(!req.user){
+        console.log("User is not logged in")
+        res.redirect("/")
+    }else{
+        console.log("checking blog")
+        Blog.findById(req.params.blog_id).populate("user.id").exec(function(err,foundblog){
+            if(err){
+                console.log(err)
+            }else{
+                if(foundblog.user.id.equals(req.user._id)){
+                    //console.log("is owner")
+                    next()
+                }else{
+                    //console.log("is not owner")
+                    res.redirect("/blog")
+                }
+            }
+        })
     }
 
 }

@@ -4,6 +4,7 @@ var LocalStrategy = require("passport-local").Strategy
 var mongoose = require("mongoose");
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override")
+var fileUpload = require("express-fileupload")
 var http = require('http');
 var User = require("./models/user");
 var ChecklistItem = require("./models/checklistItem")
@@ -12,8 +13,8 @@ var indexRoute = require("./routes/index");
 var checklistRoute = require("./routes/checklist");
 var checklistItemRoute = require("./routes/checklistItem")
 var authRoute = require("./routes/auth")
+var blogRoute = require("./routes/blog")
 var seedDB = require("./seed");
-var session = require('express-session')
 const passportLocalMongoose = require('passport-local-mongoose');
 //const hostname = '127.0.0.1';
 const hostname = '0.0.0.0';
@@ -26,6 +27,7 @@ app.set('views', './views')
 app.set("view engine", "ejs");
 app.use(express.static('public'));
 app.use(methodOverride("_method"));
+app.use(fileUpload())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(require('express-session')({
   secret: 'anything',
@@ -38,11 +40,12 @@ app.use(function (req, res, next) {
   res.locals.user = req.user
   next()
 })
-
+//{limits: { fileSize: 50 * 1024 * 1024 }}
 app.use(indexRoute);
 app.use(checklistRoute);
 app.use(checklistItemRoute)
 app.use(authRoute);
+app.use(blogRoute)
 
 
 passport.serializeUser(User.serializeUser());

@@ -1,0 +1,27 @@
+<% include partials/header %>
+
+<div class="ui main container">
+    <div class="ui attached message">
+        <div class="header">
+            New Blog
+        </div>
+    </div>
+    <form class="ui form attached fluid segment" action="/blog/<%=blog._id%>?_method=PUT" method="POST" id="blogForm">
+        <div class="field">
+            <label>Title</label>
+            <input type="text" name="blog[title]" placeholder="Title" required value="<%= blog.title %>">
+            <label>Image URL</label>
+            <input type="text" name="blog[image]" placeholder="Image URL" required value="<%= blog.image %>">
+            <label>Blog Content</label>
+            <textarea name="blog[text]" placeholder="Blog Text" form="blogForm" ><%= blog.text %></textarea>
+        </div>
+        <button class="ui button" type="submit" id="blogSubmit">
+            New
+        </button>
+    </form>
+</div>
+
+<br>
+
+
+<% include partials/footer %>

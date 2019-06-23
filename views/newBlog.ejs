@@ -1,0 +1,44 @@
+<% include partials/header %>
+
+<div class="ui main container">
+    <div class="ui attached message">
+        <div class="header">
+            New Blog
+        </div>
+    </div>
+    <form class="ui form attached fluid segment" action="/blog" method="POST" id="blogForm">
+        <div class="field">
+            <label>Title</label>
+            <input type="text" name="blog[title]" placeholder="Title" required>
+            <label>Image URL</label>
+            <input type="text" name="blog[image]" placeholder="Image URL" required>
+            <label>Blog Content</label>
+            <textarea name="blog[text]" placeholder="Blog Text" form="blogForm"></textarea>
+        </div>
+        <button class="ui button" type="submit" id="blogSubmit">
+            New
+        </button>
+    </form>
+</div>
+
+<br>
+
+<form class="ui form attached fluid segment" action="/blog" method="POST" id="blogForm1">
+    <div class="field">
+        <label>Title</label>
+        <input type="text" name="blog[title]" placeholder="Title" required>
+        <label>Image URL</label>
+        <input type="file" name="filename" id="fileupload1">
+        <label for="fileupload1"> Select a file to upload</label>
+        <label>Blog Content</label>
+        <textarea name="blog[text]" placeholder="Blog Text" form="blogForm"></textarea>
+    </div>
+    <button class="ui button" type="submit" id="blogSubmit">
+        New
+    </button>
+</form>
+
+<!-- Image preview -->
+<div id="imagePreview" style="background:cadetblue">Hi</div>
+
+<% include partials/footer %>

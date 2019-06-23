@@ -11,6 +11,12 @@ var userSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Checklist"
         }
+    ],
+    blogs:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Blog"
+        }
     ]
 })
 

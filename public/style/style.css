@@ -14,3 +14,22 @@ a{
     display:inline-block;
 }
 
+.centeredSpecific{
+    position: fixed;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.centeredAll{
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#blogImage{
+    max-height:250px;
+    width: auto;
+    height: auto;
+}

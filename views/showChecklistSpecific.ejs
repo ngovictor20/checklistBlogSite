@@ -1,6 +1,6 @@
 <% include partials/header %>
-<div class="ui main container">
-        <div class="ui piled segment text">
+<div class="ui main container centeredSpecific">
+        <div class="ui segment middle aligned">
                 <div class="ui huge header"><%= checklist.title %></div>
                 <div class="ui input fluid icon">
                         <input type="text" name="" id="newItemForm">
@@ -26,8 +26,11 @@
                                 </div>
                         </div>
                         <% }) %>
-                </div>
+                </div>          
         </div>
+        <button class="ui secondary button">
+                <a href="/checklist/">Return to List</a>
+        </button>
 
 </div>
 <% include partials/footer %>

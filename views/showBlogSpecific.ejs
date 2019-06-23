@@ -1,0 +1,19 @@
+<% include partials/header %>
+<div class="ui main container">
+    <div class="ui attached message">
+        <div class="header">
+            <%= blog.title %>
+        </div>
+    </div>
+    <div class="ui attached fluid segment">
+        <img class="ui centered fluid image" src="<%= blog.image %>" id="blogImage">
+        <p><%= blog.text %></p>
+        <button class="ui secondary button">
+            <a href="/blog/<%=blog._id%>/edit">Edit</a>
+        </button>
+    </div>
+    <button class="ui secondary button">
+            <a href="/blog/">Return to List</a>
+    </button>
+</div>
+<% include partials/footer %>

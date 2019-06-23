@@ -1,0 +1,32 @@
+<% include partials/header %>
+
+<div class="ui main container">
+    <div class="ui attached message grid">
+        <div class="thirteen wide column header">
+            <h1>Blogs</h1>
+        </div>
+        <div class="three wide column right aligned content">
+            <div class="ui button" id="new">
+                <a href="/blog/new">New Blog<i class="plus circle icon"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="ui attached segment">
+        <div class="ui relaxed divided list">
+            <% blogs.forEach(function(item){ %>
+            <div class="item">
+                <div class="content">
+                    <div class="header">
+                        <a href="/blog/<%=item._id%>">
+                            <%= item.title %>
+                        </a>
+                    </div>
+                    <div><%= item.user.username %></div>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+    </div>
+</div>
+
+<% include partials/footer %>
