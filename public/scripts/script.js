@@ -121,31 +121,31 @@ function fileValidation(){
 
 
 
-// $("#fileupload").on("input",function(event){
-//     console.log(event)
-//     console.log("running file validation")
-//     //fileValidation()
-//     var fileInput = event.target
-//     var filePath = fileInput.files[0].name
-//     console.log(filePath)
-//     var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
-//     if(!allowedExtensions.exec(filePath)){
-//         alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
-//         //fileInput.val("");
-//         $("#imagePreview").val("")
-//         return false;
-//     }else{
-//         //Image preview
-//         //can do ajax call and encode base64
-//         if (fileInput.files && fileInput.files[0]) {
-//             console.log("reading file")
-//             var reader = new FileReader();
-//             reader.onload = function(e) {
-//                 console.log("onload")
-//                 $("#imagePreview").html('<img src="'+e.target.result+'"/>');
-//             };
-//             reader.readAsDataURL(fileInput.files[0]);
-//             console.log(fileInput.files[0])
-//         }
-//     }
-// })
+$("#fileupload").on("input",function(event){
+    console.log(event)
+    console.log("running file validation")
+    //fileValidation()
+    var fileInput = event.target
+    var filePath = fileInput.files[0].name
+    console.log(filePath)
+    var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+    if(!allowedExtensions.exec(filePath)){
+        alert('Please upload file having extensions .jpeg/.jpg/.png/.gif only.');
+        $(this).val("");
+        return false;
+    }else{
+        console.log("hi")
+        //Image preview
+        //can do ajax call and encode base64
+        // if (fileInput.files && fileInput.files[0]) {
+        //     console.log("reading file")
+        //     var reader = new FileReader();
+        //     reader.onload = function(e) {
+        //         console.log("onload")
+        //         $("#imagePreview").html('<img src="'+e.target.result+'"/>');
+        //     };
+        //     reader.readAsDataURL(fileInput.files[0]);
+        //     console.log(fileInput.files[0])
+        // }
+    }
+})

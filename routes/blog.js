@@ -6,6 +6,7 @@ var User = require("../models/user");
 var Blog = require("../models/blog")
 var passport = require("passport")
 var middleware = require("./middleware")
+var multer = require("multer")
 
 //show all blogs
 router.get("/blog", middleware.isLoggedIn, function (req, res) {
@@ -37,11 +38,11 @@ router.get("/blog/:blog_id", function (req, res) {
 
 
 //create
-router.post("/blog", middleware.isLoggedIn, function (req, res) {
+router.post("/blog", middleware.isLoggedIn, upload.single('fileupload'), function (req, res) {
     console.log(req.body.blog)
     console.log(req.user)
-    if(req.files){
-        console.log(req.files)
+    if(req.file){
+        console.log(req.file)
     }
     // createBlog(req.body.blog).then(function (blog) {
     //     User.findById(req.user._id, function (err, currUser) {
