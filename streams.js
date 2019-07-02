@@ -3,12 +3,12 @@ var app = require("express")()
 var User = require("./models/user");
 var ChecklistItem = require("./models/checklistItem")
 var Checklist = require("./models/checklist")
+var Blog = require("./models/blog")
+var Image = require("./models/image")
 var fs = require("fs")
-var Grid = require("gridfs-stream")
 var multer = require("multer")
 var crypto = require('crypto')
 var path = require('path')
-var GridFsStorage = require('multer-gridfs-storage')
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override")
 
@@ -23,47 +23,34 @@ app.set('views', './views')
 //Mongo URI
 const mongoURI = "mongodb://127.0.0.1:27017/myapp"
 
-//mongo connection
-var conn = mongoose.createConnection(mongoURI,{ useNewUrlParser: true })
-
-//Init gfs
-let gfs
-
-conn.once('open', function () {
-  //init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads') 
+mongoose.connect(mongoURI,{useNewUrlParser : true}, function(){
+  User.find({},function(err, blogs){
+    console.log(blogs)
+  })
 })
 
-//create storage engine
-var storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
-const upload = multer({ storage });
-
-//routes
-
-
 app.get('/',function(req,res){
-  res.render('newBlog1.ejs')
+  Blog.find({},function(err, blogs){
+    if(err){}else{
+      res.render('newBlog1.ejs',blogs)
+    }
+  })
 })
 app.post('/',upload.single('fileupload'),function(req,res){
   res.json({file:req.file});
+  var blogBody = req.body.blog
+  blogBody.image = req.file
+  Image.create({contentType : req.file.mimeType, image: req.file}, function(err, newImage){
+      Blog.create(blogBody, function(err,newBlog){
+        if(err){
+          console.log(err)
+        }
+        else{
+          console.log(newBlog)
+          res.redirect("/")
+        }
+      })
+  })
 })
 
 
