@@ -3,6 +3,8 @@ var app = require("express")()
 var User = require("./models/user");
 var ChecklistItem = require("./models/checklistItem")
 var Checklist = require("./models/checklist")
+var Blog = require("./models/blog")
+var Image = require("./models/image")
 var fs = require("fs")
 var Grid = require("gridfs-stream")
 var multer = require("multer")
@@ -11,6 +13,8 @@ var path = require('path')
 var GridFsStorage = require('multer-gridfs-storage')
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override")
+var upload = multer()
+
 
 const hostname = '0.0.0.0';
 const port = process.env.PORT || 5000;
@@ -24,47 +28,97 @@ app.set('views', './views')
 const mongoURI = "mongodb://127.0.0.1:27017/myapp"
 
 //mongo connection
-var conn = mongoose.createConnection(mongoURI,{ useNewUrlParser: true })
+//var conn = mongoose.createConnection(mongoURI,{useNewUrlParser: true})
 
 //Init gfs
 let gfs
 
-conn.once('open', function () {
-  //init stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads') 
-})
+mongoose.connect(mongoURI, { useNewUrlParser: true }, function () {
+  console.log(mongoose.connection.readyState);
+  //seedDB();
+  Blog.find({}, function (err, blog) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Printing blogs")
+      console.log(blog);
+    }
+  })
+});
+
+// conn.once('open', function () {
+//   init stream
+//   console.log(mongoose.connection.readyState)
+//   gfs = Grid(conn.db, mongoose.mongo);
+//   gfs.collection('uploads') 
+//   console.log("opened")
+// })
+
+
 
 //create storage engine
-var storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
-const upload = multer({ storage });
+// var storage = new GridFsStorage({
+//   url: mongoURI,
+//   file: (req, file) => {
+//     return new Promise((resolve, reject) => {
+//       crypto.randomBytes(16, (err, buf) => {
+//         if (err) {
+//           return reject(err);
+//         }
+//         const filename = buf.toString('hex') + path.extname(file.originalname);
+//         const fileInfo = {
+//           filename: filename,
+//           bucketName: 'uploads'
+//         };
+//         resolve(fileInfo);
+//       });
+//     });
+//   }
+// });
+// const upload = multer({ storage });
 
 //routes
 
 
 app.get('/',function(req,res){
+  Blog.find({}).populate("imgFile").exec(function(err,blogs){
+    console.log("printing")
+    console.log(blogs)
+    // blogs.forEach((blog)=>{
+    //   gfs.findOne({_id:blog.imgFile},function(err,file){
+    //     if(err){
+    //       console.log(err)
+    //     }else{
+    //       console.log(file)
+    //     }
+    //   })
+    // })
+    // gfs.files.findOne({_id:blogs[0].imgFile},function(err,file){
+    //   console.log("test")
+    //   console.log(file)
+    // })
+  })
   res.render('newBlog1.ejs')
 })
+
 app.post('/',upload.single('fileupload'),function(req,res){
   res.json({file:req.file});
+  var blogBody = req.body.blog;
+  console.log(blogBody);
+  blogBody.imgFile = req.file.id;
+  Blog.create(blogBody,function(err,createBlog){
+    if (err) {
+      console.log(err)
+    } else {
+      console.log(createBlog)
+    }
+  })
+  //res.redirect("/")
 })
+//5cf5bb693b5f7fb6ede2b76b
 
 
-app.listen(port,hostname,()=>console.log("Server started on port 5000"))
+
+app.listen(port,hostname,()=>{
+  console.log("Server started on port 5000")
+})

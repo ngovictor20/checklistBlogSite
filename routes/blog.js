@@ -10,12 +10,12 @@ var multer = require("multer")
 
 //show all blogs
 router.get("/blog", middleware.isLoggedIn, function (req, res) {
-    Blog.find({},function(err,blogs){
-        if(err){
+    Blog.find({}, function (err, blogs) {
+        if (err) {
             console.log(err)
             res.redirect("/")
-        }else{
-            res.render("showBlog",{blogs:blogs})
+        } else {
+            res.render("showBlog", { blogs: blogs })
         }
     })
 })
@@ -27,11 +27,11 @@ router.get("/blog/new", middleware.isLoggedIn, function (req, res) {
 //specific blog
 router.get("/blog/:blog_id", function (req, res) {
     console.log(req.params.blog_id)
-    Blog.findById(req.params.blog_id,function(err,foundBlog){
-        if(err){
+    Blog.findById(req.params.blog_id, function (err, foundBlog) {
+        if (err) {
             console.log(err)
-        }else{
-            res.render("showBlogSpecific",{blog:foundBlog})
+        } else {
+            res.render("showBlogSpecific", { blog: foundBlog })
         }
     })
 })
@@ -41,69 +41,59 @@ router.get("/blog/:blog_id", function (req, res) {
 router.post("/blog", middleware.isLoggedIn, upload.single('fileupload'), function (req, res) {
     console.log(req.body.blog)
     console.log(req.user)
-    if(req.file){
-        console.log(req.file)
+    if (req.file) {
+        //res.json({file:req.file});
+        var imgBody = {
+            fileName: req.file.originalname,
+            encoding: req.file.encoding,
+            contentType: req.file.mimetype,
+            data: req.file.buffer
+        }
+        //console.log(imgBody)
+        var blogBody = req.body.blog
+        Image.create(imgBody, function (err, newImage) {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log("======Created Image======")
+                console.log(newImage.data)
+                //res.redirect("/image")
+                Blog.create(blogBody, function (err, newBlog) {
+                    if (err) {
+                        console.log(err)
+                    }
+                    else {
+                        console.log("======Created Blog======")
+                        console.log(newBlog)
+                        newBlog.image = newImage;
+                        res.redirect("/blog/"+newBlog._id)
+                    }
+                })
+            }
+        })
     }
-    // createBlog(req.body.blog).then(function (blog) {
-    //     User.findById(req.user._id, function (err, currUser) {
-    //         if (err) {
-    //             console.log(err)
-    //         } else {
-    //             currUser.blogs.push(blog)
-    //             currUser.save()
-    //             console.log("New")
-    //             console.log(currUser)
-    //         }
-    //     })
-    //     res.redirect("/blog")
-    // })
-
-    // Blog.create(req.body.blog, function (err, newBlog) {
-    //     if (err) {
-    //         console.log(err)
-    //         reject(err)
-
-    //     } else {
-    //         newBlog.user.id = req.user._id
-    //         newBlog.user.username = req.user.username
-    //         console.log("saving newBlog")
-    //         newBlog.save()
-    //         console.log(newBlog)
-    //         User.findById(req.user._id, function (err, currUser) {
-    //             if (err) {
-    //                 console.log(err)
-    //             } else {
-    //                 currUser.blogs.push(newBlog)
-    //                 currUser.save()
-    //                 console.log("New")
-    //                 console.log(currUser)
-    //                 res.redirect("/blog")
-    //             }
-    //         })
-    //     }
-    // })
 })
 
 //edit
-router.get("/blog/:blog_id/edit",middleware.checkBlogOwnership, function (req, res) {
-    Blog.findById(req.params.blog_id,function(err,foundBlog){
-        if(err){
+router.get("/blog/:blog_id/edit", middleware.checkBlogOwnership, function (req, res) {
+    Blog.findById(req.params.blog_id, function (err, foundBlog) {
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             console.log(foundBlog)
-            res.render("editBlog",{blog:foundBlog})
+            res.render("editBlog", { blog: foundBlog })
         }
     })
 })
 
 //update
-router.put("/blog/:blog_id",middleware.checkBlogOwnership, function (req, res) {
-    Blog.findByIdAndUpdate(req.params.blog_id,req.body.blog,function(err,newBlog){
-        if(err){
+router.put("/blog/:blog_id", middleware.checkBlogOwnership, function (req, res) {
+    Blog.findByIdAndUpdate(req.params.blog_id, req.body.blog, function (err, newBlog) {
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             console.log(newBlog)
-            res.redirect("/blog/"+req.params.blog_id)
+            res.redirect("/blog/" + req.params.blog_id)
         }
     })
 })

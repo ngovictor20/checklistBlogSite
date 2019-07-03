@@ -2,13 +2,20 @@ var mongoose = require("mongoose");
 var blogSchema = new mongoose.Schema({
     title: String,
     text: String,
-    image: String, //maybe we should store photos
+    image: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref: "Image"
+    }, //maybe we should store photos
     user: {
         id:{
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
         },
         username : String
+    },
+    metadata: {
+        date: {type: String, default : new Date()},
+        tags: [String]
     }
 })              
   
