@@ -6,11 +6,9 @@ var Checklist = require("./models/checklist")
 var Blog = require("./models/blog")
 var Image = require("./models/image")
 var fs = require("fs")
-var Grid = require("gridfs-stream")
 var multer = require("multer")
 var crypto = require('crypto')
 var path = require('path')
-var GridFsStorage = require('multer-gridfs-storage')
 var bodyParser = require("body-parser");
 var methodOverride = require("method-override")
 var upload = multer()
@@ -103,17 +101,19 @@ app.get('/',function(req,res){
 
 app.post('/',upload.single('fileupload'),function(req,res){
   res.json({file:req.file});
-  var blogBody = req.body.blog;
-  console.log(blogBody);
-  blogBody.imgFile = req.file.id;
-  Blog.create(blogBody,function(err,createBlog){
-    if (err) {
-      console.log(err)
-    } else {
-      console.log(createBlog)
-    }
+  var blogBody = req.body.blog
+  blogBody.image = req.file
+  Image.create({contentType : req.file.mimeType, image: req.file}, function(err, newImage){
+      Blog.create(blogBody, function(err,newBlog){
+        if(err){
+          console.log(err)
+        }
+        else{
+          console.log(newBlog)
+          res.redirect("/")
+        }
+      })
   })
-  //res.redirect("/")
 })
 //5cf5bb693b5f7fb6ede2b76b
 
