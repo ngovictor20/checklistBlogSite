@@ -41,6 +41,7 @@ router.get("/blog/:blog_id", function (req, res) {
 router.post("/blog", middleware.isLoggedIn, upload.single('fileupload'), function (req, res) {
     console.log(req.body.blog)
     console.log(req.user)
+    console.log(req.file)
     if (req.file) {
         //res.json({file:req.file});
         var imgBody = {
