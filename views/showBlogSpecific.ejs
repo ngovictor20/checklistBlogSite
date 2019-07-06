@@ -6,7 +6,9 @@
         </div>
     </div>
     <div class="ui attached fluid segment">
-        <img class="ui centered fluid image" src="<%= blog.image %>" id="blogImage">
+        <% if(blog.image){ %>
+        <img class="ui centered fluid image" src="data:<%=blog.image.contentType%>;base64,<%=blog.image.data.toString('base64')%>" id="blogImage">
+        <% } %>
         <p><%= blog.text %></p>
         <button class="ui secondary button">
             <a href="/blog/<%=blog._id%>/edit">Edit</a>
