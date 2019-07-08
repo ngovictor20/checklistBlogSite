@@ -37,7 +37,7 @@ router.get("/checklist", middleware.isLoggedIn, function (req, res) {
                 checklistObj = results
                 console.log("=====checklist obj======")
                 console.log(checklistObj)
-                res.render("showChecklists", { checklists: checklistObj })
+                res.render("./checklists/showChecklists", { checklists: checklistObj })
             })
         }
         //issue is that we're not populating checklistItem in each checklist, so items are no longer being shown (not a big deal)
@@ -57,7 +57,7 @@ router.get("/checklist", middleware.isLoggedIn, function (req, res) {
 
 //NEW
 router.get("/checklist/new",middleware.isLoggedIn,function(req,res){
-    res.render("newChecklist");
+    res.render("./checklists/newChecklist");
 })
 
 //SHOW
@@ -67,7 +67,7 @@ router.get("/checklist/:checklist_id/",middleware.checkChecklistOwnership, funct
             console.log(err)
         }else{
             //console.log(checklist)
-            res.render("showChecklistSpecific",{checklist: checklist});
+            res.render("./checklists/showChecklistSpecific",{checklist: checklist});
         }
     });
 });
@@ -132,7 +132,7 @@ router.get("/checklist/:checklist_id/edit",middleware.checkChecklistOwnership,fu
             console.log(err)
         }else{
             console.log(checklist)
-            res.render("editChecklist",{checklist: checklist});
+            res.render("./checklists/editChecklist",{checklist: checklist});
         }
     });
 })

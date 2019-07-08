@@ -6,7 +6,7 @@ var User = require("../models/user");
 var ChecklistItem = require("../models/checklistItem")
 var Checklist = require("../models/checklist")
 
-
+//For AJAX calls
 
 //CREATE
 router.post("/checklist/:checklist_id/create", function(req,res){
@@ -71,6 +71,7 @@ router.delete("/checklist/:checklist_id/:checklistItem/", function(req,res){
                     console.log("delete successful")
                     //console.log(response)
                     res.send("hi")
+                    //probably send something more legit to the client
                 }
             })
         }

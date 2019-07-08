@@ -17,13 +17,13 @@ router.get("/blog", middleware.isLoggedIn, function (req, res) {
             console.log(err)
             res.redirect("/")
         } else {
-            res.render("showBlog", { blogs: blogs })
+            res.render("./blogs/showBlog", { blogs: blogs })
         }
     })
 })
 //show new form
 router.get("/blog/new", middleware.isLoggedIn, function (req, res) {
-    res.render("newBlog")
+    res.render("./blogs/newBlog")
 })
 
 //specific blog
@@ -34,7 +34,7 @@ router.get("/blog/:blog_id", function (req, res) {
             console.log(err)
         } else {
             console.log(foundBlog)
-            res.render("showBlogSpecific", { blog: foundBlog })
+            res.render("./blogs/showBlogSpecific", { blog: foundBlog })
         }
     })
 })
@@ -85,7 +85,7 @@ router.get("/blog/:blog_id/edit", middleware.checkBlogOwnership, function (req, 
             console.log(err)
         } else {
             console.log(foundBlog)
-            res.render("editBlog", { blog: foundBlog })
+            res.render("./blogs/editBlog", { blog: foundBlog })
         }
     })
 })

@@ -9,7 +9,7 @@ var Checklist = require("../models/checklist")
 
 router.get("/",function(req,res){
     //console.log(req.session); //req.user is created using sessions middleware
-    res.render("home");
+    res.render("./index/home");
 })
 
 
