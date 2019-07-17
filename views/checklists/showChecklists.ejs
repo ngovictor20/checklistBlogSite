@@ -1,6 +1,6 @@
-<% include partials/header %>
+<%- include ../partials/header %>
 
-<div class="ui main container centeredAll">
+<div class="ui main container centered">
     <div class="ui grid middle aligned ">
         <div class="twelve wide column content ui header">
             <h1>Your Checklists</h1>
@@ -30,13 +30,15 @@
                 </a>
             </div>
             <div class="four wide column middle aligned content">
-                <div class="ui small button yellow right floated">
+                <button class="ui yellow small button icon right floated">
                     <a href="/checklist/<%=checklist._id%>/edit">
-                        Edit
+                        <i class="icon edit outline"></i>
                     </a>
-                </div>
-                <form action="/checklist/<%=checklist._id%>?_method=DELETE" method="POST">
-                    <button class="ui small button red right floated">Delete</button>
+                 </button>
+                <form action="/checklist/<%=checklist._id%>?_method=DELETE" method="POST" class="ui right floated">
+                    <button class="ui red small button icon right floated">
+                        <i class="icon trash"></i>
+                    </button>
                 </form>
             </div>
         </div>
@@ -64,4 +66,4 @@
     </div>
 
 </div>
-<% include partials/footer %>
+<%- include ../partials/footer %>

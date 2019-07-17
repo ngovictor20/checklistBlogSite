@@ -1,21 +1,40 @@
-<% include partials/header %>
+<%- include ../partials/header %>
 
 <div class="ui main container">
     <div class="ui attached message">
         <div class="header">
-            New Blog
+            <h1>New Blog</h1>
         </div>
     </div>
-    <form class="ui form attached fluid segment" action="/blog" method="POST" id="blogForm" enctype="multipart/form-data">
-        <div class="field">
-            <label>Title</label>
-            <input type="text" name="blog[title]" placeholder="Title" required>
-            <label>Image URL</label>
-            <input type="file" name="fileupload" id="fileupload">
-            <label for="fileupload">Select a file to upload</label>
-            <label>Blog Content</label>
-            <textarea name="blog[text]" placeholder="Blog Text" form="blogForm"></textarea>
-        </div>
+    <form class="ui large form attached fluid segment" action="/blog" method="POST" id="blogForm"
+        enctype="multipart/form-data">
+        
+            <div class="field">
+                <label>Title</label>
+                <input type="text" name="blog[title]" placeholder="Title" required>
+            </div>
+            <div class="field">
+                <label>Image URL</label>
+                <input type="file" name="fileupload" id="fileupload">
+            </div>
+            <div class="field">
+                <label for="fileupload">Select a file to upload</label>
+            </div>
+            <div class="field">
+                <label>Blog Content</label>
+                <textarea name="blog[text]" placeholder="Blog Text" form="blogForm" required></textarea>
+            </div>
+            <div class="field">
+                <label for="">Tags (Optional): </label>
+                <input type="text" name="metadata[tags]" placeholder="Separate with commas">
+            </div>
+            <div class="inline field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="metadata[public]" value = true tabindex="0" >
+                    <label>Public Blog</label>
+                </div>
+            </div>
+        
         <button class="ui button" type="submit" id="blogSubmit">
             New
         </button>
@@ -24,8 +43,4 @@
 
 <br>
 
-
-<!-- Image preview -->
-<div id="imagePreview" style="background:cadetblue">Hi</div>
-
-<% include partials/footer %>
+<%- include ../partials/footer %>

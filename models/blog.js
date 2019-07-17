@@ -15,7 +15,8 @@ var blogSchema = new mongoose.Schema({
     },
     metadata: {
         date: {type: String, default : new Date()},
-        tags: [String]
+        tags: [String],
+        public: Boolean
     }
 })              
   

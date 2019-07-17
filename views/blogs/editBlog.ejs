@@ -1,4 +1,4 @@
-<% include partials/header %>
+<%- include ../partials/header %>
 
 
 <div class="ui main container">
@@ -9,13 +9,15 @@
     </div>
     <form class="ui form attached fluid segment" action="/" method="POST" id="blogForm" enctype="multipart/form-data">
         <div class="field">
-            <label>Title</label>
+            <label>Edit Title</label>
             <input type="text" name="blog[title]" placeholder="Title">
-            <label>Image URL</label>
+            <label>Edit Image</label>
             <input type="file" name="fileupload" id="fileupload">
             <label for="fileupload">Select a file to upload</label>
-            <label>Blog Content</label>
+            <label>Edit Blog Text</label>
             <textarea name="blog[text]" placeholder="Blog Text" form="blogForm"></textarea>
+            <label for="">Tags (Optional): </label>
+            <input type="text" name="metadata[tags]" placeholder="Separate with commas">
         </div>
         <button class="ui button" type="submit" id="blogSubmit">
             New
@@ -26,4 +28,4 @@
 <br>
 
 
-<% include partials/footer %>
+<%- include ../partials/footer %>

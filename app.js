@@ -66,16 +66,16 @@ passport.deserializeUser(User.deserializeUser());
 // });
 
 mongoose.connect(mongoURI, { useNewUrlParser: true }, function () {
-  console.log(mongoose.connection.readyState);
+  console.log("Connected to " + mongoURI);
   //seedDB();
-  User.find({}, function (err, users) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Printing users")
-      console.log(users);
-    }
-  })
+  // User.find({}, function (err, users) {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     console.log("Printing users")
+  //     console.log(users);
+  //   }
+  // })
 });
 
 

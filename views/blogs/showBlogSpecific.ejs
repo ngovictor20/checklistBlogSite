@@ -1,21 +1,32 @@
-<% include partials/header %>
+<%- include ../partials/header %>
 <div class="ui main container">
-    <div class="ui attached message">
-        <div class="header">
-            <%= blog.title %>
+    <div class="ui attached message grid">
+        <div class="header thirteen wide column">
+            <h1><%= blog.title %></h1>
+        </div>
+        <div class="three wide column middle aligned">
+            <form action="/blog/<%=blog._id%>?_method=DELETE" method="POST" class="ui right floated">
+                <button class="ui small button icon right floated">
+                    <i class="icon trash"></i>
+                </button>
+            </form>
+            <button class="ui small button icon right floated">
+                <a href="/blog/<%=blog._id%>/edit">
+                    <i class="icon edit outline"></i>
+                </a>
+            </button>
         </div>
     </div>
     <div class="ui attached fluid segment">
         <% if(blog.image){ %>
-        <img class="ui centered fluid image" src="data:<%=blog.image.contentType%>;base64,<%=blog.image.data.toString('base64')%>" id="blogImage">
+        <img class="ui centered fluid rounded image"
+            src="data:<%=blog.image.contentType%>;base64,<%=blog.image.data.toString('base64')%>" id="blogImage">
         <% } %>
         <p><%= blog.text %></p>
-        <button class="ui secondary button">
-            <a href="/blog/<%=blog._id%>/edit">Edit</a>
-        </button>
     </div>
-    <button class="ui secondary button">
-            <a href="/blog/">Return to List</a>
-    </button>
+
+    <a href="/blog/"><button class="ui secondary button">Return to List</button></a>
+
+
 </div>
-<% include partials/footer %>
+<%- include ../partials/footer %>

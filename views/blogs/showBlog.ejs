@@ -1,33 +1,44 @@
-<% include partials/header %>
+<%- include ../partials/header %>
 
 <div class="ui main container">
     <div class="ui attached message grid">
-        <div class="thirteen wide column header">
+        <div class="ten wide column header">
             <h1>Blogs</h1>
         </div>
-        <div class="three wide column right aligned content">
-            <div class="ui button" id="new">
-                <a href="/blog/new">New Blog<i class="plus circle icon"></i></a>
-            </div>
+        <div class="six wide column content middle aligned">
+            <a href="/blog/new"><button class="ui button left floated">New</button></a>
+            <form action="/blog/" method="GET" class="ui">
+                <div class="ui action fluid input">
+                    <input type="text" name="tags" placeholder="Search..." id="searchBlogs">
+                    <button class="ui icon button">
+                        <i class="search icon"></i>
+                    </button>
+                </div>
+            </form>
+
         </div>
     </div>
     <div class="ui attached segment">
         <div class="ui relaxed divided list">
+            <% if(blogs.length > 0){ %>
             <% blogs.forEach(function(item){ %>
             <div class="item">
                 <div class="content">
-                    <div class="header">
+                    <div class="ui medium header">
                         <a href="/blog/<%=item._id%>">
                             <%= item.title %>
                         </a>
                     </div>
-                   
-                    <div><%= item.user.username %></div>
+                    <div class="ui small header">By: <%= item.user.username %></div>
                 </div>
             </div>
-            <% }) %>
+            <% }) }else{  %>
+            <div class="item">
+                <h1 class="ui large center aligned header">Nothing to see here</h1>
+            </div>
+            <% } %>
         </div>
     </div>
 </div>
 
-<% include partials/footer %>
+<%- include ../partials/footer %>
